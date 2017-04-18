@@ -1,0 +1,57 @@
+<html>
+<head>
+<title> Dallen's Awesome Pong Game </title> 
+<script src="https://simplycodingcourses.com/files/simplyjs/simply.js"></script> 
+<script> 
+function start(){
+sjs.open();
+//ball object and props
+var ball = new sjs.Image("Images/pizza.png");
+ball.type = "ball";
+ball.setSize(40,40);
+ball.center();
+ball.friction = 0;
+ball.bounce();
+ball.pushRight(7);
+ball.pushUp(3);
+//paddle 1
+var paddle1 = new sjs.Image("Images/whitesquare2.png");
+paddle1.type = "paddle";
+paddle1.center().left();
+paddle1.setSize(20,100);
+//paddle2
+var paddle2 = new sjs.Image("Images/whitesquare2.png");
+paddle2.type = "paddle";
+paddle2.center().right();
+paddle2.setSize(20,100);
+sjs.keyDown(UP_KEY, function(){
+paddle1.pushUp(2.3);
+paddle2.pushUp(2.3);
+});
+sjs.keyDown(DOWN_KEY, function(){
+paddle1.pushDown(2.3);
+paddle2.pushDown(2.3);
+});
+//sound
+var soundEffect = new Audio('Music/pop.mp3');
+sjs.onHit("ball", "paddle", function(ball,paddle){
+	score = score + 1;
+	score_txt.setText("Score:  " +score);
+	soundEffect.play();
+	sjs.bounceOff(ball,paddle);
+});
+//paddle stuff
+sjs.onHit("ball",["right_screen", "left_screen"], function(){
+	window.location="gameover.html";
+});
+//Score
+var score=0;
+var score_txt = new sjs.Text("Score: 0", 21, "blue");
+}//end function start
+</script> 
+</head> 
+<body onload="start()"> 
+<h1> PIZZZZZZA!!!!! </h1> 
+<div id="target" style="margin:auto;background:black;"></div> 
+</body> 
+</html> 
